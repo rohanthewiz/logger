@@ -9,18 +9,24 @@ import (
 // Log Error (possibly an SErr - structured error) with optional mesg
 func LogErr(err error, mesg ...string) {
 	msgs := []string{}  // accumulate "msg" fields
-	errs := []string{}  // accumulate "errs" fields
+	errs := []string{}  // accumulate "error" fields
 
 	flds := logrus.Fields{}
 
 	// Add mesg if supplied
-	if len(mesg) > 0 {
+	if len(mesg) == 1 {  // if single item, add it to mesg
 		msgs = []string{mesg[0]}
 	}
+	// If multiple mesgs supplied wrap the error with them
+	if len(mesg) > 1 {
+		ser := serr.Wrap(err, mesg...)
+	}
+
 	// Add error string from original error
 	if er := err.Error(); er != "" {
 		errs = []string{er}
 	}
+
 	// If error is structured error, get key vals
 	if ser, ok := err.(serr.SErr); ok {
 		for key, val := range ser.FieldsMap() {
