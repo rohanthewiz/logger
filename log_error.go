@@ -19,7 +19,7 @@ func LogErr(err error, mesg ...string) {
 	}
 	// If multiple mesgs supplied wrap the error with them
 	if len(mesg) > 1 {
-		ser := serr.Wrap(err, mesg...)
+		err = serr.Wrap(err, mesg...)
 	}
 
 	// Add error string from original error
