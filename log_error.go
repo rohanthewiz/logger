@@ -8,8 +8,8 @@ import (
 
 // Log Error (possibly an SErr - structured error) with optional mesg
 func LogErr(err error, mesg ...string) {
-	var msgs []string  // accumulate "msg" fields
-	var errs []string  // accumulate "errs" fields
+	msgs := []string{}  // accumulate "msg" fields
+	errs := []string{}  // accumulate "errs" fields
 
 	flds := logrus.Fields{}
 
