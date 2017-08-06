@@ -3,7 +3,10 @@
 ### Usage
 
 ```go
-import "github.com/rohanthewiz/logger
+import (
+    "github.com/rohanthewiz/logger
+    "github.com/rohanthewiz/serr
+)
 
 func ExerciseLogging() {
     // We can log a standard error, the message will be err.Error()
