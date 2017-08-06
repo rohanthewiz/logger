@@ -1,0 +1,12 @@
+hash: dd3e451a6b25ee8cf6633d3ccff93246d698332e71498ecbb10d8efe26c7fce1
+updated: 2017-08-05T18:49:43.522580916-05:00
+imports:
+- name: github.com/rohanthewiz/serr
+  version: 1db74ea7d20de80c0ee05427b68d6148801cf5c1
+- name: github.com/sirupsen/logrus
+  version: a3f95b5c423586578a4e099b11a46c2479628cac
+- name: golang.org/x/sys
+  version: d8f5ea21b9295e315e612b4bcf4bedea93454d4d
+  subpackages:
+  - unix
+testImports: []

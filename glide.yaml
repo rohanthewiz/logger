@@ -1,0 +1,6 @@
+package: github.com/rohanthewiz/logger
+import:
+- package: github.com/rohanthewiz/serr
+  version: ~0.2.0
+- package: github.com/sirupsen/logrus
+  version: ~1.0.2
