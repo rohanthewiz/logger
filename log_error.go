@@ -8,6 +8,10 @@ import (
 
 // Log Error (possibly an SErr - structured error) with optional mesg
 func LogErr(err error, mesg ...string) {
+	if err == nil {
+		println("cowardly not logging nil err - bad things could happen :-)")
+		return		
+	}
 	msgs := []string{}  // accumulate "msg" fields
 	errs := []string{}  // accumulate "error" fields
 
