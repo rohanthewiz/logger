@@ -9,6 +9,9 @@ import (
 )
 
 func ExerciseLogging() {
+    logger.Log("info", "Conveying some info", "attribute1", "value1", "attribute2", "value2")
+    logger.Log("error", "Some error occurred", "attribute1", "value1", "attribute2", "value2")
+
 	err := errors.New("This is the original error")
 
 	// We can log a standard error, the message will be err.Error()

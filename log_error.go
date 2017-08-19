@@ -1,21 +1,27 @@
 package logger
 
 import (
+	"fmt"
+	"time"
+	"strings"
 	"github.com/rohanthewiz/serr"
 	"github.com/sirupsen/logrus"
-	"strings"
 )
 
-// Log Error (possibly an SErr - structured error) with optional mesg
-func LogErr(err error, mesg ...string) {
-	if err == nil {
-		println("cowardly not logging nil err - bad things could happen :-)")
-		return		
-	}
+// Special logging for errors and structured errors (github.com/rohanthewiz/serr)
+func LogErr(err error, mesg...string) {
 	msgs := []string{}  // accumulate "msg" fields
 	errs := []string{}  // accumulate "error" fields
 
-	flds := logrus.Fields{}
+	// Add standard logging fields
+	flds := logrus.Fields{"level": "error"}
+	if seq, ok := flds["sequence"]; !ok || seq == "" {  // set a sequence if not already set
+		flds["sequence"] = fmt.Sprintf("%d", time.Now().UnixNano())
+	}
+	if app, ok := flds["app"]; !ok || app == "" {  // and do both "env" and "app" together
+		flds["app"] = logOptions.AppName
+		flds["environment"] = logOptions.Environment
+	}
 
 	// Add mesg if supplied
 	if len(mesg) == 1 {  // if single item, add it to mesg

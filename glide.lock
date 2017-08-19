@@ -1,12 +1,25 @@
-hash: dd3e451a6b25ee8cf6633d3ccff93246d698332e71498ecbb10d8efe26c7fce1
-updated: 2017-08-05T18:49:43.522580916-05:00
+hash: 03be3c80026592f5b848f9f45e3c209367e2da646c24cef44cfcf3c4a7aad6ff
+updated: 2017-08-19T01:16:10.426539461-05:00
 imports:
+- name: github.com/lestrrat/go-file-rotatelogs
+  version: 9df8b44f21785240553882138c5df2e9cc1db910
+- name: github.com/lestrrat/go-strftime
+  version: 04ef93e285313c8978cbc7cad26d2aa7a9927451
+- name: github.com/pkg/errors
+  version: 645ef00459ed84a119197bfb8d8205042c6df63d
+- name: github.com/rifflock/lfshook
+  version: 6844c808343cb8fa357d7f141b1b990e05d24e41
 - name: github.com/rohanthewiz/serr
-  version: 1db74ea7d20de80c0ee05427b68d6148801cf5c1
+  version: c822c90317c636150b88824243f7c3368076d653
 - name: github.com/sirupsen/logrus
-  version: a3f95b5c423586578a4e099b11a46c2479628cac
+  version: f006c2ac4710855cf0f916dd6b77acf6b048dc6e
+- name: golang.org/x/crypto
+  version: b176d7def5d71bdd214203491f89843ed217f420
+  subpackages:
+  - ssh/terminal
 - name: golang.org/x/sys
   version: d8f5ea21b9295e315e612b4bcf4bedea93454d4d
   subpackages:
   - unix
+  - windows
 testImports: []
