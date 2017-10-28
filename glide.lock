@@ -1,5 +1,5 @@
-hash: c673fb505a3fddfa404de5294ea07215e8c63338dbc113a1b9c1479556b48de4
-updated: 2017-10-26T22:37:47.80769119-05:00
+hash: 8dfab1a5d28f00528a7f2f554d038f9b70128e7679affb632c573e139ff54a55
+updated: 2017-10-28T18:02:21.63410064-05:00
 imports:
 - name: github.com/lestrrat/go-file-rotatelogs
   version: 9df8b44f21785240553882138c5df2e9cc1db910
@@ -10,7 +10,7 @@ imports:
 - name: github.com/rifflock/lfshook
   version: 6844c808343cb8fa357d7f141b1b990e05d24e41
 - name: github.com/rohanthewiz/serr
-  version: d6543a08e0311a881a90c23fc48e7b70b3971ed0
+  version: 3d7ba18c971b65031ffe56169132c4e377a67399
 - name: github.com/sirupsen/logrus
   version: f006c2ac4710855cf0f916dd6b77acf6b048dc6e
 - name: golang.org/x/crypto

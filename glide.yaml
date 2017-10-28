@@ -1,7 +1,7 @@
 package: github.com/rohanthewiz/logger
 import:
 - package: github.com/rohanthewiz/serr
-  version: ~0.3.1
+  version: ~1.0.0-rc.1
 - package: github.com/sirupsen/logrus
   version: ~1.0.2
 - package: github.com/rifflock/lfshook

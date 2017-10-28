@@ -9,28 +9,28 @@ import (
 )
 
 // Special logging for errors and structured errors (github.com/rohanthewiz/serr)
-func LogErr(err error, mesg...string) {
-	msgs := []string{}  // accumulate "msg" fields
-	errs := []string{}  // accumulate "error" fields
+func LogErr(err error, message string, fields ...string) {
+	if err == nil {
+		logrus.Error("cowardly refusing to log a nil error at ", serr.FuncLoc(2))
+		return
+	}
+	msgs := []string{message}  // for "msg" fields
+	errs := []string{}  // for "error" fields
 
 	// Add standard logging fields
 	flds := logrus.Fields{"level": "error"}
-	if seq, ok := flds["sequence"]; !ok || seq == "" {  // set a sequence if not already set
-		flds["sequence"] = fmt.Sprintf("%d", time.Now().UnixNano())
+	if seq, ok := flds["seq"]; !ok || seq == "" {  // set a sequence if not already set
+		flds["seq"] = fmt.Sprintf("%d", time.Now().UnixNano())
 	}
-	if app, ok := flds["app"]; !ok || app == "" {  // and do both "env" and "app" together
+	if app, ok := flds["app"]; !ok || app == "" {
 		flds["app"] = logOptions.AppName
-		flds["environment"] = logOptions.Environment
+	}
+	if env, ok := flds["env"]; !ok || env == "" {
+		flds["env"] = logOptions.Environment
 	}
 
-	// Add mesg if supplied
-	if len(mesg) == 1 {  // if single item, add it to mesg
-		msgs = []string{mesg[0]}
-	}
-	// If multiple mesgs supplied wrap the error with them
-	if len(mesg) > 1 {
-		err = serr.Wrap(err, mesg...)
-	}
+	// Wrap - let serr handle validation
+	err = serr.LogWrap(err, fields...)
 
 	// Add error string from original error
 	if er := err.Error(); er != "" {
@@ -51,10 +51,6 @@ func LogErr(err error, mesg...string) {
 				}
 			}
 		}
-	}
-	// message is required by logrus so use the original error string if msgs empty
-	if len(msgs) == 0 {
-		msgs = []string{err.Error()}
 	}
 	// Populate the "error" field
 	if len(errs) > 0 {

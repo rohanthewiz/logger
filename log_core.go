@@ -50,8 +50,8 @@ func LogCore(level, msg string, bin *[]byte, args... string) {
 	if len(args) % 2 != 0 {
 		logrus.Warn("Even number of meta arguments required to Log function. Odd argument will be paired with a blank")
 	}
-	if seq, ok := flds["sequence"]; !ok || seq == "" {  // set a sequence if not already set
-		flds["sequence"] = fmt.Sprintf("%d", time.Now().UnixNano())
+	if seq, ok := flds["seq"]; !ok || seq == "" {  // set a sequence if not already set
+		flds["seq"] = fmt.Sprintf("%d", time.Now().UnixNano())
 	}
 
 	// msg can be empty if event present - msg will be set to event value
@@ -59,10 +59,9 @@ func LogCore(level, msg string, bin *[]byte, args... string) {
 		msg = flds["event"].(string)
 	}
 
-	// If this is an external message relay, add our app name and env
 	if app, ok := flds["app"]; !ok || app == "" {  // and do both "env" and "app" together
 		flds["app"] = logOptions.AppName
-		flds["environment"] = logOptions.Environment
+		flds["env"] = logOptions.Environment
 	}
 
 	// Call the logger

@@ -21,7 +21,7 @@ func LogAsyncBin(level string, msg string, bin *[]byte, args ...string) {
 		args_slice = append(args_slice, []byte(arg))
 	}
 	// Lock in a sequence attribute here before the async call
-	args_slice = append(args_slice, []byte("sequence"))
+	args_slice = append(args_slice, []byte("seq"))
 	args_slice = append(args_slice, []byte(fmt.Sprintf("%d", time.Now().UnixNano())))
 
 	logsWaitGroup.Add(1)  // track the number of log senders
