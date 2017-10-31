@@ -44,4 +44,5 @@ func TestLogging(t *testing.T) {
 	LogErr(err3, "Animals, do we really need them? Yes!!", "author", "me")
 	//=> ERRO[0000] Animals, do we really need them? Yes!! - Gosh! We got an error!  app= author=me cat=aight dogs="I dunno" env= error="This is the original error" level=error location="logger/logger_test.go:37 - logger/logger_test.go:36 - logger/logger_test.go:31"
 	LogErrAsync(err2, "We can now log errors asynchronously!", "key1", "value1", "key2", "value")
+	LogAsync("Warn", "Let see how this warning goes", "keyA", "valueA")
 }

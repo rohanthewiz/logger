@@ -53,7 +53,7 @@ func pollForLogs(done chan <- bool) {
 			if !ok {
 				if logsComplete { return }
 				errsComplete = true
-			} else {
+			} else if len(errAttrs) > 0 {
 				LogErr(errors.New(errAttrs[0]), errAttrs[1:]...)
 			}
 
