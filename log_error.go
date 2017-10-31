@@ -9,12 +9,12 @@ import (
 )
 
 // Special logging for errors and structured errors (github.com/rohanthewiz/serr)
-func LogErr(err error, message string, fields ...string) {
+func LogErr(err error, fields ...string) {
 	if err == nil {
 		logrus.Error("cowardly refusing to log a nil error at ", serr.FuncLoc(2))
 		return
 	}
-	msgs := []string{message}  // for "msg" fields
+	msgs := []string{}  // for "msg" fields
 	errs := []string{}  // for "error" fields
 
 	// Add standard logging fields
@@ -55,6 +55,9 @@ func LogErr(err error, message string, fields ...string) {
 	// Populate the "error" field
 	if len(errs) > 0 {
 		flds["error"] = strings.Join(errs, " - ")
+	}
+	if len(msgs) == 0 {
+		msgs = []string{err.Error()}
 	}
 	// Log it
 	logrus.WithFields(flds).Error(strings.Join(msgs, " - "))

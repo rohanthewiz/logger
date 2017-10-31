@@ -22,9 +22,11 @@ type LogOptions struct {
 }
 
 const logsChannelSize = 2000
+const errsChannelSize = 200
 var logsChannel chan [][]byte  // receive [] of []byte
+var errsChannel chan []string
 var logsDone chan bool
-var logsWaitGroup = new(sync.WaitGroup)
+var logsWaitGroup = new(sync.WaitGroup) // this will serve both error and nonerror logs
 var logOptions LogOptions
 
 // This is our main entry point for logging
@@ -32,12 +34,13 @@ func InitLog(lopts LogOptions) {
 	// Init some package variables
 	logOptions = lopts  // make options available to the logging package in logOptions
 	logsChannel = make(chan [][]byte, logsChannelSize)
+	errsChannel = make(chan []string, errsChannelSize)
 	logsDone = make(chan bool)
 
 	initLogrus()
 
 	// Start the log listener
-	go pollForLogs(logsChannel, logsDone)
+	go pollForLogs(logsDone)
 }
 
 // Close out asynchronous logging
@@ -45,6 +48,7 @@ func CloseLog() {
 	logsWaitGroup.Wait()  // fan in all log goroutines
 	// Close the channel so no more logs can be sent and the log poller knows to start wrapping up
 	close(logsChannel)
+	close(errsChannel)
 	<- logsDone // wait for the poller to completely wrap up
 }
 
