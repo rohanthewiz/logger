@@ -30,7 +30,7 @@ func LogErr(err error, fields ...string) {
 	}
 
 	// Wrap - let serr handle validation
-	err = serr.LogWrap(err, fields...)
+	err = serr.LogWrap(err,  serr.CallerIndirection.GrandParent, fields...)
 
 	// Add error string from original error
 	if er := err.Error(); er != "" {
