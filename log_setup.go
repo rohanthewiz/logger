@@ -9,7 +9,7 @@ import (
 	"path/filepath"
 	"github.com/sirupsen/logrus"
 	"github.com/rifflock/lfshook"
-	"github.com/lestrrat/go-file-rotatelogs"
+	"github.com/rohanthewiz/rotatelogs"
 )
 
 type LogOptions struct {

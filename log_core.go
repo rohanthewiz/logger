@@ -36,14 +36,12 @@ func LogCore(level, msg string, bin *[]byte, args... string) {
 	}
 
 	// Gather the other keys and values
-	key := ""
-	keys := []string{}
 	for i, arg := range args {
+		key := ""
 		if i % 2 == 0 {  // arg is a key
 			key = arg
-			keys = append(keys, key)
 		} else {
-			flds[string(key)] = arg
+			insertKey(flds, key, arg)
 		}
 	}
 	// Fixup / Validate
@@ -78,4 +76,14 @@ func LogCore(level, msg string, bin *[]byte, args... string) {
 	case "fatal":
 		lg.Fatal(msg)  // Calls os.Exit(1) after logging
 	}
+}
+
+// If existing key, prepend it's value to the given value
+func insertKey(lf logrus.Fields, key, val string) {
+	if v, ok := lf[string(key)]; ok {
+		if str, okay := v.(string); okay { // we'll only do this for string values
+			val = str + " - " + val
+		}
+	}
+	lf[string(key)] = val
 }
