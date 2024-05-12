@@ -2,47 +2,51 @@ package logger
 
 import (
 	"errors"
-	"github.com/rohanthewiz/serr"
 	"testing"
+
+	"github.com/rohanthewiz/serr"
 )
 
-// This is just a visual test for now (commented outputs are abbreviated)
-func TestLogging(t *testing.T) {
-	InitLog(LogOptions{
-		AppName: "Log Test",
-		Environment: "Dev",
-		Level: "Debug",
+func TestLog(t *testing.T) {
+	formatter := "json"
+	InitLog(LogConfig{
+		Formatter: formatter,
+		LogLevel:  "debug",
+		SlackrusCfg: SlackrusCfg{
+			Enabled: false,
+			// Endpoint: sc.Endpoint,
+			// LogLevel: sc.LogLevel,
+		},
 	})
 	defer CloseLog()
 
-	t.Log("Dummy use of testing")
+	Log("info", "Conveying some info", "attribute1", "value1", "attribute2", "value2")
+	// => {"attribute1":"value1","attribute2":"value2","level":"info","msg":"Conveying some info","time":"2024-05-11T19:30:09-05:00"}
 
+	Log("error", "Some error occurred", "attribute1", "value1", "attribute2", "value2",
+		"location", serr.FunctionLoc(serr.FrameLevels.FrameLevel1))
+	// => {"attribute1":"value1","attribute2":"value2","level":"error","location":"logger/log_test.go:25","msg":"Some error occurred","time":"2024-05-11T19:30:09-05:00"
+
+	// With regular error
 	err := errors.New("This is the original error")
 
 	// We can log a standard error, the message will be err.Error()
-	LogErr(err, "message")
-	//=> ERRO[0000] message error="This is the original error" level=error location="logger/logger_test.go:16"
+	LogErr(err)
+	// => {"level":"error","msg":"This is the original error","time":"2024-05-11T19:30:09-05:00"}
 
-	// Single argument after err becomes part of logrus message
-	LogErr(err, "Custom message here", "error", "I'm making this up")
-	//=> ERRO[0000] Custom message here error="This is the original error - I'm making this up" level=error location="logger/logger_test.go:20"
-	// Multiple arguments after err are treated as a key, value list and will wrap the error
-	LogErr(err, "message", "key1", "value1", "key2", "value2")
-	//=> ERRO[0000] msg="message" error="This is the original error" key1=value1 key2=value2 level=error location="logger/logger_test.go:23"
+	LogErr(err, "info", "message2", "key1", "value1", "key2", "value2")
+	// => {"info":"message2","key1":"value1","key2":"value2","level":"error","msg":"This is the original error","time":"2024-05-11T19:30:09-05:00"}
 
-	// Multiple arguments after err are treated as a key, value list and will wrap the error
-	LogErr(err, "This is an error", "error", "Error Code: ABCDE321",
-		"msg", "This is a critical error", "key1", "value1")
-	//=> ERRO[0000] This is an error - This is a critical error   app= env= error="This is the original error - Error Code: ABCDE321" key1=value1 level=error location="logger/logger_test.go:28"
+	// With SErr
+	ser := serr.New("This is the original error", "err0Fld1", "errVal1", "errFld2", "errVal2")
 
-	err2 := serr.Wrap(err, "Gosh! We got an error!")
-	LogErr(err2)
-	//=> ERRO[0000] message - Gosh! We got an error!              app= env= error="This is the original error" level=error location="logger/logger_test.go:32 - logger/logger_test.go:31"
+	LogErr(ser)
+	// {"errFld1":"errVal1","errFld2":"errVal2","error":"This is the original error","function":"rohanthewiz/logger.TestLog","level":"error","location":"logger/log_test.go:40","msg":"This is the original error","time":"2024-05-11T19:30:09-05:00"}
 
-	// We can log an SErr wrapped error
-	err3 := serr.Wrap(err2, "cat", "aight", "dogs", "I dunno")
-	LogErr(err3, "Animals, do we really need them? Yes!!", "author", "me")
-	//=> ERRO[0000] Animals, do we really need them? Yes!! - Gosh! We got an error!  app= author=me cat=aight dogs="I dunno" env= error="This is the original error" level=error location="logger/logger_test.go:37 - logger/logger_test.go:36 - logger/logger_test.go:31"
-	LogErrAsync(err2, "We can now log errors asynchronously!", "key1", "value1", "key2", "value")
-	LogAsync("Warn", "Let see how this warning goes", "keyA", "valueA")
+	LogErr(ser, "error", "Err: from my point of view")
+	// {"errFld1":"errVal1","errFld2":"errVal2","error":"Err: from my point of view","function":"rohanthewiz/logger.TestLog","level":"error","location":"logger/log_test.go:40","msg":"This is the original error","time":"2024-05-11T19:30:09-05:00"}
+
+	LogErr(ser, "info", "message2", "key1", "value1", "key2", "value2", "msg", "my message")
+	// => {"errFld1":"errVal1","errFld2":"errVal2","error":"This is the original error","fields.msg":"my message","function":"rohanthewiz/logger.TestLog","info":"message2","key1":"value1","key2":"value2","level":"error","location":"logger/log_test.go:40","msg":"This is the original error","time":"2024-05-11T19:30:09-05:00"
+
 }
