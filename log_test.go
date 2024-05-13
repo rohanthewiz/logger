@@ -54,4 +54,6 @@ func TestLog(t *testing.T) {
 	LogErr(ser, "info", "message2", "key1", "value1", "key2", "value2", "msg", "my message")
 	// => {"errFld1":"errVal1","errFld2":"errVal2","error":"This is the original error","fields.msg":"my message","function":"rohanthewiz/logger.TestLog","info":"message2","key1":"value1","key2":"value2","level":"error","location":"logger/log_test.go:40","msg":"This is the original error","time":"2024-05-11T19:30:09-05:00"
 
+	// User printed stack trace
+	PrintStackTrace()
 }
