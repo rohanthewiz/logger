@@ -6,13 +6,15 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// Build flds and msg for logrus
+// Log prepares fields and messages and logs to logrus
 // Level can be one of "debug", "info", "warn", "error", "fatal"
 // `args` should be a list of argument pairs
 // Example:
 //
 //	logger.Log("Info", "App is initializing...")
+//		- or shorter: function `logger.Info("App is initializing...")
 //	logger.Log("Warn", "Weird things are happening", "thing1", "value1", "thing2", "value2")
+//		- or logger.Warn("Weird things are happening", "thing1", "value1", "thing2", "value2")
 func Log(level, msg string, args ...string) {
 	flds := logrus.Fields{}
 
@@ -25,12 +27,15 @@ func Log(level, msg string, args ...string) {
 			flds[key] = arg
 		}
 	}
+
 	// Fixup / Validate
 	if len(args)%2 != 0 {
 		logrus.Warn("Even number of arguments required to Log() function. Odd argument will be paired with a blank")
 	}
 
-	msg = logPrefix + msg
+	if logPrefix != "" {
+		msg = logPrefix + " " + msg
+	}
 
 	// Call the logger
 	lg := logrus.WithFields(flds)
@@ -47,6 +52,22 @@ func Log(level, msg string, args ...string) {
 	case "fatal":
 		lg.Fatal(msg) // Calls os.Exit() after logging
 	}
+}
+
+func Error(msg string, args ...string) {
+	Log(StrLevelError, msg, args...)
+}
+
+func Warn(msg string, args ...string) {
+	Log(StrLevelWarn, msg, args...)
+}
+
+func Info(msg string, args ...string) {
+	Log(StrLevelInfo, msg, args...)
+}
+
+func Debug(msg string, args ...string) {
+	Log(StrLevelDebug, msg, args...)
 }
 
 // Landing point for Async log messages

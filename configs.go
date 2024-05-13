@@ -7,6 +7,7 @@ import (
 const (
 	defaultLogLevel         = "debug" //  "debug | info | warn | error"
 	defaultSlackrusLogLevel = "warn"
+	defaultTeamsLogLevel    = "warn"
 	defaultLogChannelSize   = 2000
 )
 
@@ -26,4 +27,11 @@ type LogConfig struct {
 	LogLevel    string //  "debug | info | warn | error"
 	LogChanSize int
 	SlackrusCfg SlackrusCfg
+	TeamsLogCfg TeamsLogCfg
+}
+
+type TeamsLogCfg struct {
+	Enabled  bool
+	Endpoint string // Endpoint for your Teams hook
+	LogLevel string //  "debug | info | warn | error | fatal"
 }

@@ -2,6 +2,7 @@ package logger
 
 import (
 	"errors"
+	"fmt"
 	"testing"
 
 	"github.com/rohanthewiz/serr"
@@ -37,6 +38,10 @@ func TestLog(t *testing.T) {
 	LogErr(err, "info", "message2", "key1", "value1", "key2", "value2")
 	// => {"info":"message2","key1":"value1","key2":"value2","level":"error","msg":"This is the original error","time":"2024-05-11T19:30:09-05:00"}
 
+	LogErr(err, "message2", "key1", "value1", "key2", "value2")
+	// => {"info":"message2","key1":"value1","key2":"value2","level":"error","msg":"This is the original error","time":"2024-05-11T19:30:09-05:00"}
+
+	fmt.Println("------------------------------------------------------------------------------")
 	// With SErr
 	ser := serr.New("This is the original error", "err0Fld1", "errVal1", "errFld2", "errVal2")
 

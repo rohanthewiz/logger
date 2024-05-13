@@ -8,18 +8,17 @@ type loggerLevels struct {
 
 // Consumable log levels (convenience var)
 var LogLevel = loggerLevels{
-	Debug: "debug",
-	Info:  "info",
-	Warn:  "warn",
 	Error: "error",
+	Warn:  "warn",
+	Info:  "info",
+	Debug: "debug",
 }
 
-// Even more convenient
 const (
-	Error = "error"
-	Warn  = "warn"
-	Info  = "info"
-	Debug = "debug"
+	StrLevelError = "error"
+	StrLevelWarn  = "warn"
+	StrLevelInfo  = "info"
+	StrLevelDebug = "debug"
 )
 
 // Internal only - keep private

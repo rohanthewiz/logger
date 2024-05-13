@@ -40,28 +40,31 @@ func LogErr(err error, keyValPairs ...string) {
 	flds := logrus.Fields{}
 
 	// If error is structured error, get key vals
-	if ser, ok := err.(serr.SErr); ok {
-		// Add any additional attributes
-		ser.AppendKeyValPairs(keyValPairs...)
+	ser, ok := err.(serr.SErr)
+	if !ok { // make into SErr just for the sake of logging
+		ser = serr.NewSerrNoContext(err)
+	}
 
-		// Get all attributes from the error
-		for key, val := range ser.FieldsMap() {
-			if key != "" {
-				switch strings.ToLower(key) {
-				case strings.ToLower(serr.UserMsgKey):
-					continue // that one is for UI only
-				case strings.ToLower(serr.UserMsgSeverityKey):
-					continue // that one is for UI only
-				case prefixKey:
-					logPrefix = val
-					continue
-				default:
-					flds[key] = val
-				}
+	// Add any additional attributes
+	ser.AppendKeyValPairs(keyValPairs...)
+
+	// Get all attributes from the error
+	for key, val := range ser.FieldsMap() {
+		if key != "" {
+			switch strings.ToLower(key) {
+			case strings.ToLower(serr.UserMsgKey):
+				continue // that one is for UI only
+			case strings.ToLower(serr.UserMsgSeverityKey):
+				continue // that one is for UI only
+			case prefixKey:
+				logPrefix = val
+				continue
+			default:
+				flds[key] = val
 			}
 		}
 
-		/*	  Seems like logrus already takes care of this	// move any `msg` to new key `msgs`
+		/*	  Seems like logrus already takes care of this	// move any `msg` to new key
 		if val, ok := flds[msgKey]; !ok {
 			flds[messagesKey] = val
 		}
@@ -69,22 +72,6 @@ func LogErr(err error, keyValPairs ...string) {
 		if _, ok := flds[errorKey]; !ok {
 			flds[errorKey] = ser.Error()
 		}
-
-	} else { // not an SErr
-		key := ""
-		for i, str := range keyValPairs {
-			if i%2 == 0 { // even position is a key
-				key = str
-			} else {
-				flds[key] = str
-			}
-		}
-
-		// Fixup / Validate
-		if len(keyValPairs)%2 != 0 {
-			logrus.Warn("It is best to use pairs of key values with the LogErr function")
-		}
-
 	}
 
 	logrus.WithFields(flds).Error(logPrefix + err.Error())

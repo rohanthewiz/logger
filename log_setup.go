@@ -4,10 +4,11 @@ import (
 	"strings"
 
 	"github.com/johntdyer/slackrus"
+	"github.com/rohanthewiz/logger/teams_log"
 	"github.com/sirupsen/logrus"
 )
 
-var logPrefix = "Prefix"
+var logPrefix string
 
 func InitLog(logCfg LogConfig) {
 	initLogrus(logCfg)
@@ -45,6 +46,26 @@ func initLogrus(logCfg LogConfig) {
 		logrus.SetFormatter(&logrus.TextFormatter{})
 	}
 
+	// Teams Log
+	if logCfg.TeamsLogCfg.Enabled {
+		// Pass config down to local package
+		teams_log.SetTeamsCfg(teams_log.TeamsCfg{
+			Enabled:     logCfg.TeamsLogCfg.Enabled,
+			LogEndpoint: logCfg.TeamsLogCfg.Endpoint,
+			LogLevel:    logCfg.TeamsLogCfg.LogLevel,
+		})
+
+		if logCfg.TeamsLogCfg.LogLevel == "" {
+			logCfg.TeamsLogCfg.LogLevel = defaultTeamsLogLevel
+		}
+
+		logrus.AddHook(&teams_log.TeamsLogHook{
+			URL:            logCfg.TeamsLogCfg.Endpoint,
+			AcceptedLevels: teams_log.AllowedLevels(logrusLevels[strings.ToLower(logCfg.TeamsLogCfg.LogLevel)]),
+		})
+	}
+
+	// Slack Log
 	if logCfg.SlackrusCfg.Enabled {
 		if logCfg.SlackrusCfg.LogLevel == "" {
 			logCfg.SlackrusCfg.LogLevel = defaultSlackrusLogLevel
