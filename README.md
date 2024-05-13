@@ -36,9 +36,6 @@ func main() {
 	logger.Info("Conveying some info", "attribute1", "value1", "attribute2", "value2")
 	// => {"attribute1":"value1","attribute2":"value2","level":"info","msg":"Conveying some info","time":"2024-05-13T13:18:43-05:00"}
 
-	logger.Error("Some error occurred", "attribute1", "value1", "attribute2", "value2")
-	// => {"attribute1":"value1","attribute2":"value2","level":"error","msg":"Some error occurred","time":"2024-05-13T13:18:43-05:00"}
-
 	logger.Debug("something interesting happened here")
 	// => {"level":"debug","msg":"something interesting happened here","time":"2024-05-13T13:49:13-05:00"}
 
@@ -54,7 +51,7 @@ func main() {
 
 	// Multiple arguments after message are treated as a key, value list and will wrap the error
 	// If an odd number of fields are provided, the first field is treated as the message.
-	logger.LogErr(err, "message", "key1", "value1", "key2", "value2")
+	logger.Err(err, "message", "key1", "value1", "key2", "value2")
 	// => {"error":"this is the original error","fields.msg":"message","key1":"value1","key2":"value2","level":"error","msg":"this is the original error","time":"2024-05-13T13:18:43-05:00"
 
 	// See log_test.go for more examples

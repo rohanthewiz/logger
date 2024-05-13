@@ -8,10 +8,8 @@ import (
 )
 
 const (
-	errorKey    = "error"
-	msgKey      = "msg"
-	messagesKey = "messages"
-	prefixKey   = "prefix"
+	errorKey  = "error"
+	prefixKey = "prefix"
 )
 
 // Logging for structured errors (SErr)
@@ -21,25 +19,16 @@ const (
 //
 //		er := serr.New("Just testing an error", "attribute1", "value1", "attribute2", "value2")
 //	logger.LogErr(er, "'attribute3", "value3", "attribute4", "value4")
-//	 logger.LogErr(er)
-//	 logger.LogErr(er, "msg", "error message")
+//
+// see the tests for more examples
 func LogErr(err error, keyValPairs ...string) {
 	if err == nil {
 		Log(LogLevel.Info, "In LogErr Not logging a nil err", "called from", serr.FunctionLoc(serr.FrameLevels.FrameLevel1))
 		return
 	}
-	//
-	// var errs []string // accumulate "error" fields, to include the inner error
-	// var msgs []string // for accumulating "msg" fields which become like a description of the error
-
-	// // Add error string from original error
-	// if er := err.Error(); er != "" {
-	// 	errs = []string{er}
-	// }
 
 	flds := logrus.Fields{}
 
-	// If error is structured error, get key vals
 	ser, ok := err.(serr.SErr)
 	if !ok { // make into SErr just for the sake of logging
 		ser = serr.NewSerrNoContext(err)
@@ -64,15 +53,15 @@ func LogErr(err error, keyValPairs ...string) {
 			}
 		}
 
-		/*	  Seems like logrus already takes care of this	// move any `msg` to new key
-		if val, ok := flds[msgKey]; !ok {
-			flds[messagesKey] = val
-		}
-		*/
 		if _, ok := flds[errorKey]; !ok {
 			flds[errorKey] = ser.Error()
 		}
 	}
 
 	logrus.WithFields(flds).Error(logPrefix + err.Error())
+}
+
+// Err is a convenience wrapper for LogErr
+func Err(err error, keyValPairs ...string) {
+	LogErr(err, keyValPairs...)
 }

@@ -7,10 +7,6 @@ github.com/johntdyer/slackrus v0.0.0-20230315191314-80bc92dee4fc h1:enUIjGI+ljPL
 github.com/johntdyer/slackrus v0.0.0-20230315191314-80bc92dee4fc/go.mod h1:EM3NFHkhmCX05s6UvxWSJ8h/3mluH4tF6bYr9FXF1Cg=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
-github.com/rohanthewiz/serr v1.1.0 h1:t7qmuwpa2b62Jtd8T/AXA50PcwFHHHvZKZIegd3tIek=
-github.com/rohanthewiz/serr v1.1.0/go.mod h1:WYBghPccoTAUknotbanGZzWnIFREXYI5ULwf5sjznxY=
-github.com/rohanthewiz/serr v1.1.1-0.20240513190621-8f3673e23f59 h1:MdXhLap91SudHa7f1ElSW00V5WRCwactsPGb8Nq1980=
-github.com/rohanthewiz/serr v1.1.1-0.20240513190621-8f3673e23f59/go.mod h1:WYBghPccoTAUknotbanGZzWnIFREXYI5ULwf5sjznxY=
 github.com/rohanthewiz/serr v1.2.0 h1:zBb2ns/a9e78jbqbbb7knhShpUind7FkrlKj6vghNgQ=
 github.com/rohanthewiz/serr v1.2.0/go.mod h1:WYBghPccoTAUknotbanGZzWnIFREXYI5ULwf5sjznxY=
 github.com/sirupsen/logrus v1.9.0 h1:trlNQbNUG3OdDrDil03MCb1H2o9nJ1x4/5LYw7byDE0=

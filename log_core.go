@@ -54,9 +54,11 @@ func Log(level, msg string, args ...string) {
 	}
 }
 
-func Error(msg string, args ...string) {
-	Log(StrLevelError, msg, args...)
-}
+// This would be rarely used as we don't have the benefits of wrapping here.
+// Prefer to log an error with Log.Err()
+// func Error(msg string, args ...string) {
+// 	Log(StrLevelError, msg, args...)
+// }
 
 func Warn(msg string, args ...string) {
 	Log(StrLevelWarn, msg, args...)
@@ -78,15 +80,3 @@ func logBytes(level string, msg string, args ...[]byte) {
 	}
 	Log(level, msg, strArgs...)
 }
-
-/*
-// If existing key, prepend it's value to the given value
-func insertKey(lf logrus.Fields, key, val string) {
-	if v, ok := lf[string(key)]; ok {
-		if str, okay := v.(string); okay { // we'll only do this for string values
-			val = str + " - " + val
-		}
-	}
-	lf[string(key)] = val
-}
-*/
