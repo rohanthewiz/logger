@@ -3,6 +3,7 @@ package logger
 import (
 	"errors"
 	"fmt"
+	"strings"
 	"testing"
 
 	"github.com/rohanthewiz/serr"
@@ -54,6 +55,12 @@ func TestLog(t *testing.T) {
 
 	Err(ser, "info", "message2", "key1", "value1", "key2", "value2", "msg", "my message")
 	// => {"errFld1":"errVal1","errFld2":"errVal2","error":"This is the original error","fields.msg":"my message","function":"rohanthewiz/logger.TestLog","info":"message2","key1":"value1","key2":"value2","level":"error","location":"logger/log_test.go:40","msg":"This is the original error","time":"2024-05-11T19:30:09-05:00"
+
+	fmt.Println("\n--- Sending some logs async'ly", strings.Repeat("--", 50))
+	LogAsync("info", "An Async message")
+	LogAsync("error", "An Async error message")
+
+	// See log_test.go for more examples
 
 	// User printed stack trace
 	PrintStackTrace()

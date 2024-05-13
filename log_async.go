@@ -1,5 +1,10 @@
 package logger
 
+// Async is a convenience function for LogAsync
+func Async(level, msg string, args ...string) {
+	LogAsync(level, msg, args...)
+}
+
 // LogAsync adds a log message asynchronously to the queue (logsChannel)
 // level can be one of "debug", "info", "warn", "error"
 // msg is required and should be a simple description of the event we are logging
