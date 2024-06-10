@@ -1,5 +1,7 @@
 package logger
 
+import "fmt"
+
 // Async is a convenience function for LogAsync
 func Async(level, msg string, args ...string) {
 	LogAsync(level, msg, args...)
@@ -11,6 +13,12 @@ func Async(level, msg string, args ...string) {
 // args are (optional) pairs of of attribute, values
 // Example: LogAsync("info", "Downloading a file", "filename", "export.xlsx")
 func LogAsync(level, msg string, args ...string) {
+	if logsChannel == nil {
+		fmt.Println("Logs not setup for Async. Use InitLog() to setup.",
+			"msg:", msg, "args:", args)
+		return
+	}
+
 	argsSlice := [][]byte{[]byte(level), []byte(msg)} // first section of arguments
 	for _, arg := range args {                        // get the rest of the arguments
 		argsSlice = append(argsSlice, []byte(arg))
