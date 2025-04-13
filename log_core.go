@@ -54,24 +54,6 @@ func Log(level, msg string, args ...string) {
 	}
 }
 
-// This would be rarely used as we don't have the benefits of wrapping here.
-// Prefer to log an error with Log.Err()
-// func Error(msg string, args ...string) {
-// 	Log(StrLevelError, msg, args...)
-// }
-
-func Warn(msg string, args ...string) {
-	Log(StrLevelWarn, msg, args...)
-}
-
-func Info(msg string, args ...string) {
-	Log(StrLevelInfo, msg, args...)
-}
-
-func Debug(msg string, args ...string) {
-	Log(StrLevelDebug, msg, args...)
-}
-
 // Landing point for Async log messages
 func logBytes(level string, msg string, args ...[]byte) {
 	var strArgs []string
