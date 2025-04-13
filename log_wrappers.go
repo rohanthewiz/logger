@@ -49,33 +49,33 @@ func (attr Attr) String() []string {
 	return []string{key, val}
 }
 
-func InfoAttrs(msg string, args ...Attr) {
+func InfoAttrs(msg string, attrs ...Attr) {
 	var strArgs []string
-	for _, attr := range args {
+	for _, attr := range attrs {
 		strArgs = append(strArgs, attr.String()...)
 	}
 	Log(StrLevelInfo, msg, strArgs...)
 }
 
-func DebugAttrs(msg string, args ...Attr) {
+func DebugAttrs(msg string, attrs ...Attr) {
 	var strArgs []string
-	for _, attr := range args {
+	for _, attr := range attrs {
 		strArgs = append(strArgs, attr.String()...)
 	}
 	Log(StrLevelDebug, msg, strArgs...)
 }
 
-func WarnAttrs(msg string, args ...Attr) {
+func WarnAttrs(msg string, attrs ...Attr) {
 	var strArgs []string
-	for _, attr := range args {
+	for _, attr := range attrs {
 		strArgs = append(strArgs, attr.String()...)
 	}
 	Log(StrLevelWarn, msg, strArgs...)
 }
 
-func ErrorAttrs(msg string, args ...Attr) {
+func ErrorAttrs(msg string, attrs ...Attr) {
 	var strArgs []string
-	for _, attr := range args {
+	for _, attr := range attrs {
 		strArgs = append(strArgs, attr.String()...)
 	}
 	Log(StrLevelError, msg, strArgs...)

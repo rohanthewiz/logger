@@ -2,12 +2,6 @@ package logger
 
 import "testing"
 
-func TestLogAttr(t *testing.T) {
-	a := Attr{"key1", "value1"}
-
-	InfoAttrs("A log", a, Attr{"key2", "value2"}, Attr{"key3", 1})
-}
-
 func TestFormattingFunctions(t *testing.T) {
 	InitLog(LogConfig{
 		Formatter: "json",
@@ -57,6 +51,9 @@ func TestAttrLogFunctions(t *testing.T) {
 		LogLevel:  "debug",
 	})
 	defer CloseLog()
+
+	a := Attr{"key1", "value1"}
+	InfoAttrs("A log", a, Attr{"key2", "value2"}, Attr{"key3", 1})
 
 	// Test DebugAttrs
 	DebugAttrs("Debug with attributes",
