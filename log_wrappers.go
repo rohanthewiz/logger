@@ -38,45 +38,45 @@ func Error(msg string, args ...string) {
 	Log(StrLevelError, msg, args...)
 }
 
-type Attr struct {
-	Key   any
-	Value any
-}
+// type Attr struct {
+// 	Key   any
+// 	Value any
+// }
+//
+// func (attr Attr) String() []string {
+// 	key := fmt.Sprintf("%v", attr.Key)
+// 	val := fmt.Sprintf("%v", attr.Value)
+// 	return []string{key, val}
+// }any
 
-func (attr Attr) String() []string {
-	key := fmt.Sprintf("%v", attr.Key)
-	val := fmt.Sprintf("%v", attr.Value)
-	return []string{key, val}
-}
-
-func InfoAttrs(msg string, attrs ...Attr) {
+func InfoAttrs(msg string, attrs ...any) {
 	var strArgs []string
 	for _, attr := range attrs {
-		strArgs = append(strArgs, attr.String()...)
+		strArgs = append(strArgs, fmt.Sprintf("%v", attr))
 	}
 	Log(StrLevelInfo, msg, strArgs...)
 }
 
-func DebugAttrs(msg string, attrs ...Attr) {
+func DebugAttrs(msg string, attrs ...any) {
 	var strArgs []string
 	for _, attr := range attrs {
-		strArgs = append(strArgs, attr.String()...)
+		strArgs = append(strArgs, fmt.Sprintf("%v", attr))
 	}
 	Log(StrLevelDebug, msg, strArgs...)
 }
 
-func WarnAttrs(msg string, attrs ...Attr) {
+func WarnAttrs(msg string, attrs ...any) {
 	var strArgs []string
 	for _, attr := range attrs {
-		strArgs = append(strArgs, attr.String()...)
+		strArgs = append(strArgs, fmt.Sprintf("%v", attr))
 	}
 	Log(StrLevelWarn, msg, strArgs...)
 }
 
-func ErrorAttrs(msg string, attrs ...Attr) {
+func ErrorAttrs(msg string, attrs ...any) {
 	var strArgs []string
 	for _, attr := range attrs {
-		strArgs = append(strArgs, attr.String()...)
+		strArgs = append(strArgs, fmt.Sprintf("%v", attr))
 	}
 	Log(StrLevelError, msg, strArgs...)
 }

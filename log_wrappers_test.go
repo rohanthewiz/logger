@@ -52,23 +52,23 @@ func TestAttrLogFunctions(t *testing.T) {
 	})
 	defer CloseLog()
 
-	a := Attr{"key1", "value1"}
-	InfoAttrs("A log", a, Attr{"key2", "value2"}, Attr{"key3", 1})
+	// Test InfoAttrs
+	InfoAttrs("A log", "key1", "value1", "key2", "value2", "key3", 1)
 
 	// Test DebugAttrs
 	DebugAttrs("Debug with attributes",
-		Attr{"string_key", "string_value"},
-		Attr{"int_key", 42},
-		Attr{"float_key", 3.14})
+		"string_key", "string_value",
+		"int_key", 42,
+		"float_key", 3.14)
 
 	// Test WarnAttrs
 	WarnAttrs("Warning with attributes",
-		Attr{"warning_code", 301},
-		Attr{"source", "test"})
+		"warning_code", 301,
+		"source", "test")
 
 	// Test ErrorAttrs
 	ErrorAttrs("Error with attributes",
-		Attr{"error_code", 500},
-		Attr{"system", "database"},
-		Attr{"retry", false})
+		"error_code", 500,
+		"system", "database",
+		"retry", false)
 }
