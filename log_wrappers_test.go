@@ -33,7 +33,7 @@ func TestSimpleLogFunctions(t *testing.T) {
 	defer CloseLog()
 
 	// Test Info function
-	Info("Simple info message", "key1", "value1")
+	Info("Simple info message", "key1", "value1", "keyz", "valuez")
 
 	// Test Debug function
 	Debug("Simple debug message", "key1", "value1", "key2", "value2")
@@ -45,30 +45,43 @@ func TestSimpleLogFunctions(t *testing.T) {
 	Error("Simple error message", "key1", "value1", "key2", "value2")
 }
 
-func TestAttrLogFunctions(t *testing.T) {
-	InitLog(LogConfig{
-		Formatter: "json",
-		LogLevel:  "debug",
-	})
-	defer CloseLog()
+func TestStrArrayFromAnyArgs(t *testing.T) {
+	tests := []struct {
+		name     string
+		args     []interface{}
+		expected []string
+	}{
+		{
+			name:     "empty args",
+			args:     []interface{}{},
+			expected: []string{},
+		},
+		{
+			name:     "string arguments",
+			args:     []interface{}{"hello", "world"},
+			expected: []string{"hello", "world"},
+		},
+		{
+			name:     "mixed type arguments",
+			args:     []interface{}{123, "hello", 45.67, true, nil},
+			expected: []string{"123", "hello", "45.67", "true", "<nil>"},
+		},
+	}
 
-	// Test InfoAttrs
-	InfoAttrs("A log", "key1", "value1", "key2", "value2", "key3", 1)
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			result := strArrayFromAnyArgs(tt.args...)
 
-	// Test DebugAttrs
-	DebugAttrs("Debug with attributes",
-		"string_key", "string_value",
-		"int_key", 42,
-		"float_key", 3.14)
+			if len(result) != len(tt.expected) {
+				t.Errorf("strArrayFromAnyArgs() length = %v, expected length %v", len(result), len(tt.expected))
+				return
+			}
 
-	// Test WarnAttrs
-	WarnAttrs("Warning with attributes",
-		"warning_code", 301,
-		"source", "test")
-
-	// Test ErrorAttrs
-	ErrorAttrs("Error with attributes",
-		"error_code", 500,
-		"system", "database",
-		"retry", false)
+			for i, v := range result {
+				if v != tt.expected[i] {
+					t.Errorf("strArrayFromAnyArgs()[%d] = %v, expected %v", i, v, tt.expected[i])
+				}
+			}
+		})
+	}
 }

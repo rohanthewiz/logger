@@ -30,7 +30,7 @@ func Log(level, msg string, args ...string) {
 
 	// Fixup / Validate
 	if len(args)%2 != 0 {
-		logrus.Warn("Even number of arguments required to Log() function. Odd argument will be paired with a blank")
+		logrus.Warn("Even number of arguments required to Log() function. Odd argument will be paired with a blank", "len_args ", len(args))
 	}
 
 	if logPrefix != "" {
