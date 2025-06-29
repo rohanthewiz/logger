@@ -7,10 +7,10 @@ github.com/johntdyer/slackrus v0.0.0-20230315191314-80bc92dee4fc h1:enUIjGI+ljPL
 github.com/johntdyer/slackrus v0.0.0-20230315191314-80bc92dee4fc/go.mod h1:EM3NFHkhmCX05s6UvxWSJ8h/3mluH4tF6bYr9FXF1Cg=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
-github.com/rohanthewiz/serr v1.2.0 h1:zBb2ns/a9e78jbqbbb7knhShpUind7FkrlKj6vghNgQ=
-github.com/rohanthewiz/serr v1.2.0/go.mod h1:WYBghPccoTAUknotbanGZzWnIFREXYI5ULwf5sjznxY=
-github.com/sirupsen/logrus v1.9.0 h1:trlNQbNUG3OdDrDil03MCb1H2o9nJ1x4/5LYw7byDE0=
-github.com/sirupsen/logrus v1.9.0/go.mod h1:naHLuLoDiP4jHNo9R0sCBMtWGeIprob74mVsIT4qYEQ=
+github.com/rohanthewiz/serr v1.2.4 h1:cW2IrPvNfE89BxfW+NwvrgtbLqacz4LG1DLw54mOn/Q=
+github.com/rohanthewiz/serr v1.2.4/go.mod h1:WYBghPccoTAUknotbanGZzWnIFREXYI5ULwf5sjznxY=
+github.com/sirupsen/logrus v1.9.3 h1:dueUQJ1C2q9oE3F7wvmSGAaVtTmUizReu6fjN8uqzbQ=
+github.com/sirupsen/logrus v1.9.3/go.mod h1:naHLuLoDiP4jHNo9R0sCBMtWGeIprob74mVsIT4qYEQ=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
 github.com/stretchr/testify v1.7.0/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
 github.com/stretchr/testify v1.9.0 h1:HtqpIVDClZ4nwg75+f6Lvsy/wHu+3BoSGCbBAcpTsTg=

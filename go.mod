@@ -4,8 +4,8 @@ go 1.19
 
 require (
 	github.com/johntdyer/slackrus v0.0.0-20230315191314-80bc92dee4fc
-	github.com/rohanthewiz/serr v1.2.0
-	github.com/sirupsen/logrus v1.9.0
+	github.com/rohanthewiz/serr v1.2.4
+	github.com/sirupsen/logrus v1.9.3
 )
 
 require (
