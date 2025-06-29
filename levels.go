@@ -33,15 +33,15 @@ var logrusLevels = map[string]logrus.Level{
 // AllowedLevels returns all log levels at or above the specified level
 func AllowedLevels(lvl logrus.Level) []logrus.Level {
 	allLevels := []logrus.Level{
-		logrus.PanicLevel,
-		logrus.FatalLevel,
-		logrus.ErrorLevel,
-		logrus.WarnLevel,
-		logrus.InfoLevel,
-		logrus.DebugLevel,
 		logrus.TraceLevel,
+		logrus.DebugLevel,
+		logrus.InfoLevel,
+		logrus.WarnLevel,
+		logrus.ErrorLevel,
+		logrus.FatalLevel,
+		logrus.PanicLevel,
 	}
-	
+
 	for i := range allLevels {
 		if allLevels[i] == lvl {
 			return allLevels[i:]

@@ -9,15 +9,15 @@ import (
 
 // TestSlackAPIHook demonstrates usage of the Slack API hook
 // To run this test with actual Slack integration:
-// 1. Set environment variables:
-//    export SLACK_API_TOKEN="xoxb-your-bot-token"
-//    export SLACK_CHANNEL="C086KQQUGCW"
-// 2. Run: go test -v -run TestSlackAPIHook
+//  1. Set environment variables:
+//     export SLACK_API_TOKEN="xoxb-your-bot-token"
+//     export SLACK_CHANNEL="C086KQQUGCW"
+//  2. Run: go test -v -run TestSlackAPIHook
 func TestSlackAPIHook(t *testing.T) {
 	// Skip if no Slack token is provided
-	token := "test-token" // Replace with os.Getenv("SLACK_API_TOKEN") for real testing
+	token := "bogus-token"    // Replace with os.Getenv("SLACK_API_TOKEN") for real testing
 	channel := "test-channel" // Replace with os.Getenv("SLACK_CHANNEL") for real testing
-	
+
 	if token == "test-token" {
 		t.Skip("Skipping Slack API test - no real token provided")
 	}
@@ -43,7 +43,7 @@ func TestSlackAPIHook(t *testing.T) {
 		Info("service", "payment-gateway", "environment", "staging", "Payment processed successfully")
 		Warn("latency_ms", 1500, "API response time is high")
 		Error("error_type", "DatabaseConnectionError", "Failed to connect to database")
-		
+
 		// Test with structured error from serr
 		err := serr.New("connection timeout",
 			"host", "db.example.com",
@@ -56,7 +56,7 @@ func TestSlackAPIHook(t *testing.T) {
 	t.Run("BlockMessages", func(t *testing.T) {
 		// Re-initialize with block formatting
 		logrus.StandardLogger().Hooks = make(logrus.LevelHooks) // Clear existing hooks
-		
+
 		InitLog(LogConfig{
 			Formatter: "json",
 			LogLevel:  "debug",
@@ -100,8 +100,8 @@ func TestSlackAPIHook(t *testing.T) {
 			"table", "users",
 			"timeout_seconds", "30",
 			"error_code", "TIMEOUT_ERROR")
-		
-		LogErr(err, 
+
+		LogErr(err,
 			"service", "user-service",
 			"environment", "production",
 			"module", "user-repository",
@@ -124,10 +124,10 @@ func ExampleInitLog_slackAPI() {
 			UseBlocks: true,                  // Use rich formatting for better readability
 		},
 	}
-	
+
 	InitLog(config)
 	defer CloseLog()
-	
+
 	// Your application code here
 	Info("Application started successfully")
 	Error("service", "api", "Database connection lost")

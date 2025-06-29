@@ -1,6 +1,7 @@
 package logger
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/johntdyer/slackrus"
@@ -88,6 +89,7 @@ func initLogrus(logCfg LogConfig) {
 		// Convert string log level to logrus level
 		acceptedLevel := logrusLevels[strings.ToLower(logCfg.SlackAPICfg.LogLevel)]
 		acceptedLevels := AllowedLevels(acceptedLevel)
+		fmt.Println("Slack API acceptedLevels:", acceptedLevels)
 
 		hook := slack_api.NewSlackAPIHook(
 			logCfg.SlackAPICfg.Token,
