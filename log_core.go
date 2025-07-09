@@ -1,6 +1,7 @@
 package logger
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/sirupsen/logrus"
@@ -30,7 +31,8 @@ func Log(level, msg string, args ...string) {
 
 	// Fixup / Validate
 	if len(args)%2 != 0 {
-		logrus.Warn("Even number of arguments required to Log() function. Odd argument will be paired with a blank", "len_args ", len(args))
+		logrus.Warn(fmt.Sprintf("Even number of args required for Log() function (nbr of args: %d)", len(args)),
+			" msg ", msg, " args ", fmt.Sprintf("%#v", args))
 	}
 
 	if logPrefix != "" {
