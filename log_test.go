@@ -10,7 +10,7 @@ import (
 )
 
 func TestLog(t *testing.T) {
-	formatter := "json"
+	formatter := "text" // or json
 	InitLog(LogConfig{
 		Formatter: formatter,
 		LogLevel:  "debug",
@@ -43,6 +43,9 @@ func TestLog(t *testing.T) {
 	Err(err, "message2", "key1", "value1", "key2", "value2")
 	// => {"info":"message2","key1":"value1","key2":"value2","level":"error","msg":"This is the original error","time":"2024-05-11T19:30:09-05:00"}
 
+	// Log a nil error
+	LogErr(nil, "message")
+
 	fmt.Println("------------------------------------------------------------------------------")
 	// With SErr
 	ser := serr.New("This is the original error", "err0Fld1", "errVal1", "errFld2", "errVal2")
@@ -56,7 +59,7 @@ func TestLog(t *testing.T) {
 	Err(ser, "info", "message2", "key1", "value1", "key2", "value2", "msg", "my message")
 	// => {"errFld1":"errVal1","errFld2":"errVal2","error":"This is the original error","fields.msg":"my message","function":"rohanthewiz/logger.TestLog","info":"message2","key1":"value1","key2":"value2","level":"error","location":"logger/log_test.go:40","msg":"This is the original error","time":"2024-05-11T19:30:09-05:00"
 
-	fmt.Println("\n--- Sending some logs async'ly", strings.Repeat("--", 50))
+	fmt.Println("\n--- Sending some logs async'ly", strings.Repeat("--", 40))
 	LogAsync("info", "An Async message")
 	LogAsync("error", "An Async error message")
 
