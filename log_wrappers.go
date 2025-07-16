@@ -16,8 +16,9 @@ func Debug(msg string, args ...any) {
 	Log(StrLevelDebug, msg, strArrayFromAnyArgs(args...)...)
 }
 
-// Error will create a new error based on msg
-// If we are logging an existing error, better to use LogErr(err, ...)
+// Error will create a new error based on msg.
+// It is better to use LogErr(err, ...) if you are logging an existing error,
+// as that will include any error stack trace from serr
 func Error(msg string, args ...any) {
 	Log(StrLevelError, msg, strArrayFromAnyArgs(args...)...)
 }

@@ -22,18 +22,18 @@ const (
 //
 // see the tests for more examples
 func LogErr(err error, keyValPairs ...any) {
-	logErrCore(err, strArrayFromAnyArgs(keyValPairs...)...)
+	logErrCore(err, keyValPairs...)
 }
 
 // Err is a convenience wrapper for LogErr
 // We have to duplicate the function body or use a common core so as to keep error framelevels consistent
 func Err(err error, keyValPairs ...any) {
-	logErrCore(err, strArrayFromAnyArgs(keyValPairs...)...)
+	logErrCore(err, keyValPairs...)
 }
 
 // logErrCore is the common core for logging errors.
 // This exists so as to keep framelevels consistent among calling functions
-func logErrCore(err error, keyValPairs ...string) {
+func logErrCore(err error, keyValPairs ...any) {
 	if err == nil {
 		Log(LogLevel.Info, "In LogErr Not logging a nil err", "called from",
 			serr.FunctionLoc(serr.FrameLevels.FrameLevel3))
@@ -51,7 +51,7 @@ func logErrCore(err error, keyValPairs ...string) {
 	ser.AppendCallerContext(serr.FrameLevels.FrameLevel4)
 
 	// Add any additional attributes
-	ser.AppendKeyValPairs(keyValPairs...)
+	ser.AppendAttributes(keyValPairs...)
 
 	// Get all attributes from the error
 	for key, val := range ser.FieldsMap() {
