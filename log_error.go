@@ -21,14 +21,14 @@ const (
 //	logger.LogErr(er, "'attribute3", "value3", "attribute4", "value4")
 //
 // see the tests for more examples
-func LogErr(err error, keyValPairs ...string) {
-	logErrCore(err, keyValPairs...)
+func LogErr(err error, keyValPairs ...any) {
+	logErrCore(err, strArrayFromAnyArgs(keyValPairs...)...)
 }
 
 // Err is a convenience wrapper for LogErr
 // We have to duplicate the function body or use a common core so as to keep error framelevels consistent
-func Err(err error, keyValPairs ...string) {
-	logErrCore(err, keyValPairs...)
+func Err(err error, keyValPairs ...any) {
+	logErrCore(err, strArrayFromAnyArgs(keyValPairs...)...)
 }
 
 // logErrCore is the common core for logging errors.

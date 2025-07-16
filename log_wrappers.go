@@ -22,14 +22,6 @@ func Error(msg string, args ...any) {
 	Log(StrLevelError, msg, strArrayFromAnyArgs(args...)...)
 }
 
-func strArrayFromAnyArgs(args ...any) (strArr []string) {
-	// fmt.Println("**-> len(args)", len(args))
-	for _, arg := range args {
-		strArr = append(strArr, fmt.Sprintf("%v", arg))
-	}
-	return
-}
-
 // F is a convenience function for log Info using a formatted string
 func F(format string, args ...any) {
 	Log(StrLevelInfo, fmt.Sprintf(format, args...))
