@@ -13,6 +13,12 @@ github.com/rohanthewiz/serr v1.2.6 h1:SPbafQqQuowkHvOdMNnktcOQ3jgNd2JQUEIC04iNhS
 github.com/rohanthewiz/serr v1.2.6/go.mod h1:WYBghPccoTAUknotbanGZzWnIFREXYI5ULwf5sjznxY=
 github.com/rohanthewiz/serr v1.2.7-0.20250716231710-f9da79d71331 h1:G8qRTM9TGJSS+ha5fhmuG6h98rGGQbNFcEapls7hCj0=
 github.com/rohanthewiz/serr v1.2.7-0.20250716231710-f9da79d71331/go.mod h1:WYBghPccoTAUknotbanGZzWnIFREXYI5ULwf5sjznxY=
+github.com/rohanthewiz/serr v1.2.10 h1:SK6FHrrtmn+jLiypoSI9F0/gXySBmI+oU9uLtWUs1Qo=
+github.com/rohanthewiz/serr v1.2.10/go.mod h1:WYBghPccoTAUknotbanGZzWnIFREXYI5ULwf5sjznxY=
+github.com/rohanthewiz/serr v1.2.11-0.20250717171440-5caa40325884 h1:WLk3hDiNw3k0QboXheuWwmJlfIyG41orLU9bgBrADSA=
+github.com/rohanthewiz/serr v1.2.11-0.20250717171440-5caa40325884/go.mod h1:WYBghPccoTAUknotbanGZzWnIFREXYI5ULwf5sjznxY=
+github.com/rohanthewiz/serr v1.2.12 h1:WnuLKhFDIaOvHK7wMi5SsyNw1GX61xOOobF8D0BxGT4=
+github.com/rohanthewiz/serr v1.2.12/go.mod h1:WYBghPccoTAUknotbanGZzWnIFREXYI5ULwf5sjznxY=
 github.com/sirupsen/logrus v1.9.3 h1:dueUQJ1C2q9oE3F7wvmSGAaVtTmUizReu6fjN8uqzbQ=
 github.com/sirupsen/logrus v1.9.3/go.mod h1:naHLuLoDiP4jHNo9R0sCBMtWGeIprob74mVsIT4qYEQ=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=

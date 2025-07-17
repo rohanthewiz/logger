@@ -50,6 +50,8 @@ func TestLog(t *testing.T) {
 	// With SErr
 	ser := serr.New("This is the original error", "err0Fld1", "errVal1", "errFld2", "errVal2")
 
+	fmt.Println("\n--- ", serr.StringFromErr(ser), "---\n ")
+
 	Err(ser)
 	// {"errFld1":"errVal1","errFld2":"errVal2","error":"This is the original error","function":"rohanthewiz/logger.TestLog","level":"error","location":"logger/log_test.go:40","msg":"This is the original error","time":"2024-05-11T19:30:09-05:00"}
 

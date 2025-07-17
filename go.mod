@@ -6,7 +6,7 @@ toolchain go1.24.3
 
 require (
 	github.com/johntdyer/slackrus v0.0.0-20230315191314-80bc92dee4fc
-	github.com/rohanthewiz/serr v1.2.7-0.20250716231710-f9da79d71331
+	github.com/rohanthewiz/serr v1.2.12
 	github.com/sirupsen/logrus v1.9.3
 )
 
