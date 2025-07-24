@@ -7,6 +7,14 @@ import (
 	"strings"
 )
 
+func strArrayFromAnyArgs(args ...any) (strArr []string) {
+	// fmt.Println("**-> len(args)", len(args))
+	for _, arg := range args {
+		strArr = append(strArr, fmt.Sprintf("%v", arg))
+	}
+	return
+}
+
 type PrintStackTraceOpts struct {
 	WithoutHeading bool
 }
