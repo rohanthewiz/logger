@@ -22,6 +22,13 @@ func main() {
 				Endpoint: "<Endpoint>",
 				LogLevel: "<LogLevel>",
 			}, */
+		/*		SlackAPICfg: logger.SlackAPICfg{
+				Enabled:   true,
+				Token:     "xoxb-your-bot-token", // Bot User OAuth Token
+				Channel:   "C086KQQUGCW",         // Channel ID
+				LogLevel:  "error",               // Minimum level to send to Slack
+				UseBlocks: true,                  // Use rich block formatting
+			}, */
 	})
 	defer logger.CloseLog()
 
@@ -60,3 +67,60 @@ func main() {
 }
 
 ```
+
+### Slack API Hook
+
+The logger package now includes a Slack API hook that sends log messages directly to Slack using the Web API. This provides more flexibility than webhook-based approaches.
+
+#### Features
+
+- **Simple Messages**: Send basic formatted log messages to Slack
+- **Rich Block Formatting**: Create visually appealing messages with headers, fields, and action buttons
+- **Structured Data Support**: Automatically formats log fields into organized sections
+- **Error Context**: Special handling for error logs with stack traces and debugging links
+- **Asynchronous Sending**: Non-blocking log dispatch to maintain application performance
+
+#### Configuration
+
+```go
+logger.InitLog(logger.LogConfig{
+	Formatter: "json",
+	LogLevel:  "info",
+	SlackAPICfg: logger.SlackAPICfg{
+		Enabled:   true,
+		Token:     "xoxb-your-bot-token", // Bot User OAuth Token from Slack App
+		Channel:   "C086KQQUGCW",         // Channel ID where logs should be sent
+		LogLevel:  "error",               // Minimum level to send to Slack
+		UseBlocks: true,                  // Enable rich block formatting
+	},
+})
+```
+
+#### Usage Examples
+
+```go
+// Simple error logging
+logger.Error("service", "payment-api", "environment", "production", 
+	"Payment processing failed")
+
+// Rich error with debugging information
+logger.Error(
+	"service", "auth-service",
+	"environment", "production",
+	"error_type", "TokenValidationError",
+	"user_id", "12345",
+	"stack_trace", "goroutine 1 [running]:\nmain.validateToken(...)",
+	"log_url", "https://logs.example.com/search?id=ERR-123",
+	"incident_id", "INC-456",
+	"JWT token validation failed",
+)
+```
+
+#### Slack App Setup
+
+1. Create a Slack App at https://api.slack.com/apps
+2. Add the `chat:write` OAuth scope to your Bot Token
+3. Install the app to your workspace
+4. Copy the Bot User OAuth Token (starts with `xoxb-`)
+5. Invite the bot to the desired channel `/invite @bot_name`
+6. Get the Channel ID where you want logs sent

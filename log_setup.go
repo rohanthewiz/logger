@@ -1,9 +1,11 @@
 package logger
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/johntdyer/slackrus"
+	"github.com/rohanthewiz/logger/slack_api"
 	"github.com/rohanthewiz/logger/teams_log"
 	"github.com/sirupsen/logrus"
 )
@@ -76,6 +78,26 @@ func initLogrus(logCfg LogConfig) {
 			AcceptedLevels: slackrus.LevelThreshold(logrusLevels[strings.ToLower(logCfg.SlackrusCfg.LogLevel)]),
 			IconEmoji:      ":computer:",
 		})
+	}
+
+	// Slack API Log
+	if logCfg.SlackAPICfg.Enabled {
+		if logCfg.SlackAPICfg.LogLevel == "" {
+			logCfg.SlackAPICfg.LogLevel = defaultSlackAPILogLevel
+		}
+
+		// Convert string log level to logrus level
+		acceptedLevel := logrusLevels[strings.ToLower(logCfg.SlackAPICfg.LogLevel)]
+		acceptedLevels := AllowedLevels(acceptedLevel)
+		fmt.Println("Slack API acceptedLevels:", acceptedLevels)
+
+		hook := slack_api.NewSlackAPIHook(
+			logCfg.SlackAPICfg.Token,
+			logCfg.SlackAPICfg.Channel,
+			acceptedLevels,
+			logCfg.SlackAPICfg.UseBlocks,
+		)
+		logrus.AddHook(hook)
 	}
 
 	if ll, ok := logrusLevels[strings.ToLower(logCfg.LogLevel)]; ok {
