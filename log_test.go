@@ -14,11 +14,6 @@ func TestLog(t *testing.T) {
 	InitLog(LogConfig{
 		Formatter: formatter,
 		LogLevel:  "debug",
-		SlackrusCfg: SlackrusCfg{
-			Enabled: false,
-			// Endpoint: sc.Endpoint,
-			// LogLevel: sc.LogLevel,
-		},
 	})
 	defer CloseLog()
 

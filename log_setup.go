@@ -41,12 +41,11 @@ func initLogrus(logCfg LogConfig) {
 		logCfg.LogLevel = defaultLogLevel
 	}
 
-	// Important - must set formatter -- should not be nil
-	if logCfg.Formatter == "json" {
-		logrus.SetFormatter(&logrus.JSONFormatter{})
-	} else {
-		logrus.SetFormatter(&logrus.TextFormatter{})
-	}
+	SetLogFormat(logCfg.Formatter)
+
+	SetLogLevel(logCfg.LogLevel)
+
+	// HOOKS
 
 	// Teams Log
 	if logCfg.TeamsLogCfg.Enabled {
@@ -67,7 +66,7 @@ func initLogrus(logCfg LogConfig) {
 		})
 	}
 
-	// Slack Log
+	// Slack Log via WebHook
 	if logCfg.SlackrusCfg.Enabled {
 		if logCfg.SlackrusCfg.LogLevel == "" {
 			logCfg.SlackrusCfg.LogLevel = defaultSlackrusLogLevel
@@ -99,10 +98,32 @@ func initLogrus(logCfg LogConfig) {
 		)
 		logrus.AddHook(hook)
 	}
+}
 
-	if ll, ok := logrusLevels[strings.ToLower(logCfg.LogLevel)]; ok {
-		logrus.SetLevel(ll)
+// SetLogFormat sets the log format with "json" for JSON, otherwise text
+func SetLogFormat(format string) {
+	format = strings.ToLower(format)
+	if format == "json" {
+		logrus.SetFormatter(&logrus.JSONFormatter{})
 	} else {
-		logrus.SetLevel(logrus.InfoLevel)
+		logrus.SetFormatter(&logrus.TextFormatter{})
 	}
+}
+
+// SetLogLevel sets the log level, defaulting to info
+// logLevel can be "debug | info | warn | error"
+func SetLogLevel(logLevel string) {
+	logLevel = strings.ToLower(logLevel)
+
+	if logLevel == "warning" {
+		logLevel = "warn"
+	}
+
+	logrusLevel := logrus.InfoLevel
+
+	if ll, ok := logrusLevels[logLevel]; ok {
+		logrusLevel = ll
+	}
+
+	logrus.SetLevel(logrusLevel)
 }
