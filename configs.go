@@ -16,6 +16,7 @@ var logsChannel chan [][]byte
 var logsWaitGroup = new(sync.WaitGroup)
 var logsDone chan bool
 
+// SlackrusCfg is deprecated - use Slack API instead - will be removed soon
 type SlackrusCfg struct {
 	Enabled  bool
 	Endpoint string // Endpoint for your Slack hook
@@ -27,7 +28,7 @@ type LogConfig struct {
 	Formatter   string // "text" | "json"
 	LogLevel    string //  "debug | info | warn | error"
 	LogChanSize int
-	SlackrusCfg SlackrusCfg
+	SlackrusCfg SlackrusCfg // deprecated - use Slack API instead - will be removed soon
 	TeamsLogCfg TeamsLogCfg
 	SlackAPICfg SlackAPICfg
 }
@@ -41,7 +42,7 @@ type TeamsLogCfg struct {
 type SlackAPICfg struct {
 	Enabled   bool
 	Token     string // Slack Bot User OAuth Token (xoxb-...)
-	Channel   string // Channel ID (e.g., C086KQQUGCW)
+	Channel   string // Channel ID (e.g., C086K...)
 	LogLevel  string // "debug | info | warn | error | fatal"
 	UseBlocks bool   // Whether to use rich block formatting
 }
