@@ -66,7 +66,7 @@ func initLogrus(logCfg LogConfig) {
 		})
 	}
 
-	// Slack Log via WebHook
+	// Slack Log via WebHook - deprecated, prefer to use Slack API instead
 	if logCfg.SlackrusCfg.Enabled {
 		if logCfg.SlackrusCfg.LogLevel == "" {
 			logCfg.SlackrusCfg.LogLevel = defaultSlackrusLogLevel

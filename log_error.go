@@ -1,6 +1,7 @@
 package logger
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/rohanthewiz/serr"
@@ -54,7 +55,15 @@ func logErrCore(err error, keyValPairs ...any) {
 	ser.AppendAttributes(keyValPairs...)
 
 	// Get all attributes from the error
-	for key, val := range ser.FieldsMap() {
+	for key, anyArr := range ser.FieldsMapOfSliceOfAny() {
+		strArr := make([]string, 0, len(anyArr))
+
+		for _, a := range anyArr {
+			strArr = append(strArr, fmt.Sprintf("%v", a))
+		}
+
+		strVal := strings.Join(strArr, " -> ")
+
 		if key != "" {
 			switch strings.ToLower(key) {
 			case strings.ToLower(serr.UserMsgKey):
@@ -62,10 +71,10 @@ func logErrCore(err error, keyValPairs ...any) {
 			case strings.ToLower(serr.UserMsgSeverityKey):
 				continue // that one is for UI only
 			case prefixKey:
-				logPrefix = val
+				logPrefix = strVal
 				continue
 			default:
-				flds[key] = val
+				flds[key] = strVal
 			}
 		}
 

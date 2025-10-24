@@ -39,10 +39,10 @@ func TestSlackAPIHook(t *testing.T) {
 		defer CloseLog()
 
 		// Test various log levels
-		Debug("debug_key", "debug_value", "This is a debug message")
-		Info("service", "payment-gateway", "environment", "staging", "Payment processed successfully")
-		Warn("latency_ms", 1500, "API response time is high")
-		Error("error_type", "DatabaseConnectionError", "Failed to connect to database")
+		Debug("This is a debug message", "debug_key", "debug_value")
+		Info("Payment processed successfully", "service", "payment-gateway", "environment", "staging")
+		Warn("API response time is high", "latency_ms", 1500)
+		Error("Failed to connect to database", "error_type", "DatabaseConnectionError")
 
 		// Test with structured error from serr
 		err := serr.New("connection timeout",
