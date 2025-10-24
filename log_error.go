@@ -56,7 +56,7 @@ func logErrCore(err error, keyValPairs ...any) {
 
 	// Get all attributes from the error
 	for key, anyArr := range ser.FieldsMapOfSliceOfAny() {
-		strArr := make([]string, len(anyArr))
+		strArr := make([]string, 0, len(anyArr))
 
 		for _, a := range anyArr {
 			strArr = append(strArr, fmt.Sprintf("%v", a))
