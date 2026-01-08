@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/johntdyer/slackrus"
 	"github.com/rohanthewiz/logger/slack_api"
 	"github.com/rohanthewiz/logger/teams_log"
 	"github.com/sirupsen/logrus"
@@ -63,19 +62,6 @@ func initLogrus(logCfg LogConfig) {
 		logrus.AddHook(&teams_log.TeamsLogHook{
 			URL:            logCfg.TeamsLogCfg.Endpoint,
 			AcceptedLevels: teams_log.AllowedLevels(logrusLevels[strings.ToLower(logCfg.TeamsLogCfg.LogLevel)]),
-		})
-	}
-
-	// Slack Log via WebHook - deprecated, prefer to use Slack API instead
-	if logCfg.SlackrusCfg.Enabled {
-		if logCfg.SlackrusCfg.LogLevel == "" {
-			logCfg.SlackrusCfg.LogLevel = defaultSlackrusLogLevel
-		}
-
-		logrus.AddHook(&slackrus.SlackrusHook{
-			HookURL:        logCfg.SlackrusCfg.Endpoint,
-			AcceptedLevels: slackrus.LevelThreshold(logrusLevels[strings.ToLower(logCfg.SlackrusCfg.LogLevel)]),
-			IconEmoji:      ":computer:",
 		})
 	}
 
