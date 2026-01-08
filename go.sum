@@ -1,10 +1,6 @@
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
-github.com/johntdyer/slack-go v0.0.0-20230314151037-c5bf334f9b6e h1:5tRmeUw/tXT/DvaoloWTWwlyrEZrKA7pnrz/X+g9s34=
-github.com/johntdyer/slack-go v0.0.0-20230314151037-c5bf334f9b6e/go.mod h1:u0Jo4f2dNlTJeeOywkM6bLwxq6gC3pZ9rEFHn3AhTdk=
-github.com/johntdyer/slackrus v0.0.0-20230315191314-80bc92dee4fc h1:enUIjGI+ljPLV2X3Mu3noR0P3m2NaIFGRsp96J8RBio=
-github.com/johntdyer/slackrus v0.0.0-20230315191314-80bc92dee4fc/go.mod h1:EM3NFHkhmCX05s6UvxWSJ8h/3mluH4tF6bYr9FXF1Cg=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/rohanthewiz/serr v1.2.20 h1:/oMu0SQ5LjN7b3Tl8uKcJRlptpqQyRJbyV01G8ZgGNw=
