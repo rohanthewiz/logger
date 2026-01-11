@@ -52,7 +52,7 @@ logger.Error("Simple error message", "key1", "value1")
 Printf-style formatting is available:
 
 ```go
-logger.F("Number: %d String: %s", 42, "test")
+logger.F("Number: %d String: %s", 42, "test") // log info-level message
 logger.InfoF("Info message with %s and %d", "string", 123)
 logger.DebugF("Debug message with %.2f", 3.14159)
 logger.WarnF("Warning: %s occurred %d times", "event", 5)
