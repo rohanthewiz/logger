@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/rohanthewiz/logger/hooks/log_chan"
 	"github.com/rohanthewiz/logger/slack_api"
 	"github.com/rohanthewiz/logger/teams_log"
 	"github.com/sirupsen/logrus"
@@ -63,6 +64,19 @@ func initLogrus(logCfg LogConfig) {
 			URL:            logCfg.TeamsLogCfg.Endpoint,
 			AcceptedLevels: teams_log.AllowedLevels(logrusLevels[strings.ToLower(logCfg.TeamsLogCfg.LogLevel)]),
 		})
+	}
+
+	// LogChan hook — sends text-formatted log lines to a caller-provided channel
+	if logCfg.LogChanCfg.Enabled {
+		if logCfg.LogChanCfg.LogLevel == "" {
+			logCfg.LogChanCfg.LogLevel = defaultLogLevel
+		}
+
+		acceptedLevel := logrusLevels[strings.ToLower(logCfg.LogChanCfg.LogLevel)]
+		acceptedLevels := log_chan.AllowedLevels(acceptedLevel)
+
+		hook := log_chan.NewLogChanHook(logCfg.LogChanCfg.Ch, acceptedLevels)
+		logrus.AddHook(hook)
 	}
 
 	// Slack API Log

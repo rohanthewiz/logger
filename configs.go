@@ -22,6 +22,7 @@ type LogConfig struct {
 	LogChanSize int
 	TeamsLogCfg TeamsLogCfg
 	SlackAPICfg SlackAPICfg
+	LogChanCfg  LogChanCfg
 }
 
 type TeamsLogCfg struct {
@@ -36,4 +37,12 @@ type SlackAPICfg struct {
 	Channel   string // Channel ID (e.g., C086K...)
 	LogLevel  string // "debug | info | warn | error | fatal"
 	UseBlocks bool   // Whether to use rich block formatting
+}
+
+// LogChanCfg configures the LogChan hook which sends logrus-text-formatted
+// messages to a caller-provided string channel.
+type LogChanCfg struct {
+	Enabled  bool
+	Ch       chan string // caller-provided channel to receive log messages
+	LogLevel string     // "debug | info | warn | error | fatal"
 }
