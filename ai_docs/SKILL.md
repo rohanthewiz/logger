@@ -133,6 +133,7 @@ type LogConfig struct {
     LogChanSize int         // Buffer size for async logs (default: 2000)
     TeamsLogCfg TeamsLogCfg // Microsoft Teams integration
     SlackAPICfg SlackAPICfg // Slack integration
+    LogChanCfg  LogChanCfg  // Send text-formatted logs to a string channel
 }
 ```
 
@@ -165,6 +166,40 @@ logger.InitLog(logger.LogConfig{
     },
 })
 ```
+
+### LogChan Hook (Send Logs to a Channel)
+
+Route logrus-text-formatted log lines to a `chan string` for custom processing
+(e.g. forwarding to a UI, writing to a database, or bridging to another system).
+
+```go
+// Create a buffered channel to receive log messages
+logCh := make(chan string, 100)
+
+logger.InitLog(logger.LogConfig{
+    Formatter: "text",
+    LogLevel:  "debug",
+    LogChanCfg: logger.LogChanCfg{
+        Enabled:  true,
+        Ch:       logCh,
+        LogLevel: "warn", // Only send warn and above to the channel
+    },
+})
+defer logger.CloseLog()
+
+// Consume messages from the channel in a separate goroutine
+go func() {
+    for msg := range logCh {
+        fmt.Print("received log: ", msg)
+    }
+}()
+
+logger.Warn("disk usage high", "percent", "92")
+// The consumer goroutine receives the text-formatted log line
+```
+
+The hook uses a non-blocking send — if the channel is full, messages are dropped
+rather than blocking the logging goroutine.
 
 ## Log Levels
 
