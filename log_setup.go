@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/rohanthewiz/logger/log_chan"
 	"github.com/rohanthewiz/logger/slack_api"
 	"github.com/rohanthewiz/logger/teams_log"
 	"github.com/sirupsen/logrus"
@@ -83,6 +84,21 @@ func initLogrus(logCfg LogConfig) {
 			logCfg.SlackAPICfg.UseBlocks,
 		)
 		logrus.AddHook(hook)
+	}
+
+	// LogChan - send log entries to a Go channel
+	if logCfg.LogChanCfg.Enabled && logCfg.LogChanCfg.LogChannel != nil {
+		if logCfg.LogChanCfg.LogLevel == "" {
+			logCfg.LogChanCfg.LogLevel = defaultLogChanLevel
+		}
+
+		acceptedLevel := logrusLevels[strings.ToLower(logCfg.LogChanCfg.LogLevel)]
+		acceptedLevels := AllowedLevels(acceptedLevel)
+
+		logrus.AddHook(log_chan.NewLogChanHook(
+			logCfg.LogChanCfg.LogChannel,
+			acceptedLevels,
+		))
 	}
 }
 

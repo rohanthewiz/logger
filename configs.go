@@ -2,12 +2,15 @@ package logger
 
 import (
 	"sync"
+
+	"github.com/rohanthewiz/logger/log_chan"
 )
 
 const (
 	defaultLogLevel         = "debug" //  "debug | info | warn | error"
 	defaultTeamsLogLevel    = "warn"
 	defaultSlackAPILogLevel = "warn"
+	defaultLogChanLevel     = "warn"
 	defaultLogChannelSize   = 2000
 )
 
@@ -22,6 +25,7 @@ type LogConfig struct {
 	LogChanSize int
 	TeamsLogCfg TeamsLogCfg
 	SlackAPICfg SlackAPICfg
+	LogChanCfg  LogChanCfg
 }
 
 type TeamsLogCfg struct {
@@ -36,4 +40,10 @@ type SlackAPICfg struct {
 	Channel   string // Channel ID (e.g., C086K...)
 	LogLevel  string // "debug | info | warn | error | fatal"
 	UseBlocks bool   // Whether to use rich block formatting
+}
+
+type LogChanCfg struct {
+	Enabled    bool
+	LogChannel chan log_chan.LogEntry // Channel to receive log entries
+	LogLevel   string               // "debug | info | warn | error | fatal"
 }
