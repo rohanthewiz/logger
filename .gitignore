@@ -2,3 +2,6 @@
 .claude/
 
 vendor/
+
+# compiled binaries
+log_chan_hook
