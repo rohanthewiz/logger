@@ -45,7 +45,7 @@ func logErrCore(err error, keyValPairs ...any) {
 
 	ser, ok := err.(serr.SErr)
 	if !ok { // make into SErr just for the sake of logging
-		ser = serr.NewSerrNoContext(err)
+		ser = *(serr.NewSerrNoContext(err))
 	}
 
 	// Add current location context so we don't have to wrap errors at the point of logging
