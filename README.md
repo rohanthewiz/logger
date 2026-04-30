@@ -116,6 +116,44 @@ logger.Error(
 )
 ```
 
+### LogChan Hook
+
+The LogChan hook sends logrus-text-formatted log messages to a caller-provided `chan string`. This lets you route logs to any custom consumer — a UI, a database writer, a remote forwarder, etc. — without coupling to a specific transport.
+
+#### Configuration
+
+```go
+// Create a buffered channel to receive log messages
+logCh := make(chan string, 100)
+
+logger.InitLog(logger.LogConfig{
+	Formatter: "text",
+	LogLevel:  "debug",
+	LogChanCfg: logger.LogChanCfg{
+		Enabled:  true,
+		Ch:       logCh,
+		LogLevel: "warn", // Only send warn and above to the channel
+	},
+})
+defer logger.CloseLog()
+```
+
+#### Consuming Log Messages
+
+```go
+// Start a goroutine to process incoming log lines
+go func() {
+	for msg := range logCh {
+		fmt.Print("received: ", msg) // each msg is a full text-formatted log line
+	}
+}()
+
+logger.Warn("disk usage high", "percent", "92")
+logger.Error("connection lost", "host", "db-primary")
+```
+
+The hook performs a non-blocking send — if the channel buffer is full, messages are dropped (with a warning to stdout) rather than blocking the logging goroutine.
+
 #### Slack App Setup
 
 1. Create a Slack App at https://api.slack.com/apps

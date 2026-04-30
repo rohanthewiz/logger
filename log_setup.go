@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/go-rlog/logger/hooks/log_chan"
 	"github.com/go-rlog/logger/slack_api"
 	"github.com/go-rlog/logger/teams_log"
-	"github.com/johntdyer/slackrus"
 	"github.com/sirupsen/logrus"
 )
 
@@ -66,17 +66,17 @@ func initLogrus(logCfg LogConfig) {
 		})
 	}
 
-	// Slack Log via WebHook
-	if logCfg.SlackrusCfg.Enabled {
-		if logCfg.SlackrusCfg.LogLevel == "" {
-			logCfg.SlackrusCfg.LogLevel = defaultSlackrusLogLevel
+	// LogChan hook — sends text-formatted log lines to a caller-provided channel
+	if logCfg.LogChanCfg.Enabled {
+		if logCfg.LogChanCfg.LogLevel == "" {
+			logCfg.LogChanCfg.LogLevel = defaultLogLevel
 		}
 
-		logrus.AddHook(&slackrus.SlackrusHook{
-			HookURL:        logCfg.SlackrusCfg.Endpoint,
-			AcceptedLevels: slackrus.LevelThreshold(logrusLevels[strings.ToLower(logCfg.SlackrusCfg.LogLevel)]),
-			IconEmoji:      ":computer:",
-		})
+		acceptedLevel := logrusLevels[strings.ToLower(logCfg.LogChanCfg.LogLevel)]
+		acceptedLevels := log_chan.AllowedLevels(acceptedLevel)
+
+		hook := log_chan.NewLogChanHook(logCfg.LogChanCfg.Ch, acceptedLevels)
+		logrus.AddHook(hook)
 	}
 
 	// Slack API Log
